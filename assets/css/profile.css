@@ -1,0 +1,96 @@
+body {
+    background: linear-gradient(-60deg, #be6b2f 0%, #42daac 120%, #71a8aa 100%)fixed;
+  }
+.sidebar {
+    position: fixed;
+    float: left;
+    width: 210px;
+    height: 100vh;
+    background: #212529;
+    font-size: 18px;
+}
+  
+.nav {
+    position: relative;
+    margin: 0 2%;
+    top: 25%;
+}
+
+.nav a{
+    color:#ff872f;
+}
+
+.nav a:hover{
+    color:azure ;
+    text-decoration: none;
+}
+  
+.emp-profile{
+    position: relative;
+    float: right;
+    padding: 50px;
+    margin: 100px 20px 30px 0px;
+    border-radius: 30px;
+    background: #fff;
+    font-family: 'Lato', Arial, sans-serif;
+    min-width: 1000px;
+    min-height: 400px;
+    font-size: 16px;
+}
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.profile-head h5{
+    color: #333;
+}
+
+.profile-edit-btn{
+    border: none;
+    border-radius: 3px;
+    width: inherit;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #6c757d;
+    cursor: pointer;
+}
+
+
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #ff872f;
+}
+
+.profile-tab label{
+    font-weight: 600;
+}
+.profile-tab p{
+    font-weight: 600;
+    color: #797979;
+}  

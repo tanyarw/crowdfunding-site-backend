@@ -1,0 +1,87 @@
+body{
+  background: #fff;
+}
+.sidebar {
+  position: fixed;
+  float: left;
+  width: 210px;
+  height: 100vh;
+  background: #212529;
+  font-size: 18px;
+}
+
+.nav {
+  position: relative;
+  margin: 0 2%;
+  top: 25%;
+}
+
+.nav a{
+  color:#ff872f;
+}
+
+.nav a:hover{
+  color:azure ;
+  text-decoration: none;
+}
+
+.start-fund{
+  float: right;
+  padding-top: 100px;
+  padding-right: 30px;
+}
+
+.start-fund .button2{
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Lato', Arial, sans-serif;
+  padding:20px;
+  border-radius: 20px;
+  color: #fff;
+  border:none;
+  background: linear-gradient(120deg, #ff872f 0%, #27ffbe 130%, #73faff 100%);
+}
+.start-fund .button2:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.funds{
+  padding: 150px 20px 20px 230px;
+  font-family: 'Lato', Arial, sans-serif;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
