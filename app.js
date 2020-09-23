@@ -5,8 +5,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongoConnect = require('./utils/db/connection');
 //OPEN IMPORT OF THE ROUTES
-const authRoutes = require('./api/routes/auth'); 
-const fundraiserRoutes = require('./api/routes/fundraiser'); 
+const authRoutes = require('./api/routes/authRoutes'); 
+const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
+const userRoutes = require('./api/routes/userRoutes'); 
 //CLOSE IMPORT OF THE ROUTES
 mongoose.Promise= global.Promise;
 
@@ -32,6 +33,7 @@ mongoConnect;
          
 app.use('/auth',authRoutes);
 app.use('/fundraiser',fundraiserRoutes);
+app.use('/user',userRoutes);
 app.use((error, req,res,next)=>{
     console.log(error);
     const status= error.statusCode || 500;

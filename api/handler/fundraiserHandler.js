@@ -1,6 +1,7 @@
 
 const jwt = require('jsonwebtoken')
 const Fundraiser = require('../../Models/Fundraiser');
+const { validationResult } = require('express-validator');
 
 //POST a fundraiser
 exports.postFundraiser = async (req, res, next) => {
@@ -86,3 +87,47 @@ exports.updateFundraiser = async (req, res, next) => {
 
 
 }
+
+//Get one fundraiser
+exports.getOneFundraiser = async (req, res, next) => {
+  const fundId= req.params.fundId;
+  Fundraiser.findById(fundId)
+  .then(fundraiser=>{
+    if(!fundraiser){
+      const error = new Error('Could not find fundraiser.');
+      error.statusCode = 404;
+      throw error;
+    }
+    res.status(201).json({ message: 'Fundraiser Got', fundraiser: fundraiser});  
+})
+.catch(err => {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+  next(err);
+});
+};
+
+//delet fundraiser
+exports.deleteFundraiser = (req, res, next) => {
+  const fundId= req.params.fundId;
+  Fundraiser.findById(fundId)
+    .then(fundraiser => {
+      if (!fundraiser) {
+        const error = new Error('Could not find fundraiser.');
+        error.statusCode = 404;
+        throw error;
+      }
+
+      return Fundraiser.findByIdAndRemove(fundId);
+    })
+    .then(result => {
+      res.status(200).json({ message: 'Deleted fundraiser.' });
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};

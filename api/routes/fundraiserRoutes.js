@@ -17,11 +17,26 @@ router.get('/',isAuth,fundraiserHandler.getAllFundraiser);
 * @type GET
 * @access "USER"
 */
-router.patch('/update/:fundId',isAuth,fundraiserHandler.postFundraiser);
+router.get('/get/:fundId',isAuth,fundraiserHandler.getOneFundraiser);
+/**
+* @desc Get one Fundraiser's data
+* @route /fundraiser/get/:fundId
+* @type GET
+* @access "USER"
+*/
+router.patch('/update/:fundId',isAuth,fundraiserHandler.updateFundraiser);
 /**
 * @desc Update Fundraiser data
 * @route /fundraiser/update/:fundId
 * @type PATCH
 * @access "USER"
 */
+router.delete('/delete/:fundId',isAuth,fundraiserHandler.deleteFundraiser);
+/**
+* @desc Delete Fundraiser data
+* @route /fundraiser/delete/:fundId
+* @type DELETE
+* @access "USER"
+*/
+
 module.exports = router;
