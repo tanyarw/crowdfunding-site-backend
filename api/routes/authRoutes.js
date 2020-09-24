@@ -42,7 +42,7 @@ router.post('/login',authHandler.login);
 * @desc Route to login
 * @route /auth/login
 * @type POST
-* @access "USER"
+* @access "PUBLIC"
 */
 
 module.exports = router;

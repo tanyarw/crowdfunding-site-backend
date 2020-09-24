@@ -15,7 +15,7 @@ exports.updateUser = async (req, res, next) => {
     }
     const name= req.body.name;
     const lastname= req.body.lastname;
-    const phone = req.body.description;
+    const phone = req.body.phone;
     const profession= req.body.profession;
     User.findById(userId)
     .then(user=>{
