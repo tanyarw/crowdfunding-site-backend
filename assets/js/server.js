@@ -1,55 +1,85 @@
-const express = require('express')
-const app = express()
-const bcrypt = require('bcrypt')
-const passport = require('passport')
-const flash = require('express-flash')
-const session = require('express-session')
-const methodOverride = require('method-override')
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-const initializePassport = require('./passport-config')
-initializePassport(
-  passport,
-  email => users.find(user => user.email === email),
-  id => users.find(user => user.id === id)
-)
+const app = express();
 
-const users=[]
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
 
-app.set('view-engine','ejs')
-app.use(express.urlencoded({extended:false}))
+app.use(cors(corsOptions));
 
-app.get('/',(req,res)=>{
-    res.render('index.ejs',{name:'Tanya'})
-})
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
 
-app.get('/login',(req,res)=>{
-    res.render('login.ejs')
-})
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/login',(req,res)=>{
-    
-})
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to wildsprint application." });
+});
 
+//routes
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 
-app.get('/register',(req,res)=>{
-    res.render('register.ejs')
-})
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
 
-app.post('/register',async(req,res)=>{
-    try{
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        users.push({
-            id:Date.now.toString(),
-            name:req.body.name,
-            email: req.body.email,
-            password: hashedPassword
-        })
-        res.redirect('/login')
+const db = require("./app/models");
+const Role = db.role;
+
+db.mongoose
+  .connect("mongodb+srv://tanya:tanya@iwp.c0ufz.mongodb.net/Wildsprint?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Successfully connect to MongoDB.");
+    initial();
+  })
+  .catch(err => {
+    console.error("Connection error", err);
+    process.exit();
+  });
+
+function initial() {
+  Role.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Role({
+        name: "user"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'user' to roles collection");
+      });
+
+      new Role({
+        name: "moderator"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'moderator' to roles collection");
+      });
+
+      new Role({
+        name: "admin"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'admin' to roles collection");
+      });
     }
-    catch{
-        res.redirect('/register')
-    }
-    console.log(users)
-})
-
-app.listen(3000)
+  });
+}

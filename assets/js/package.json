@@ -2,23 +2,20 @@
   "name": "js",
   "version": "1.0.0",
   "description": "",
-  "main": "agency.js",
+  "main": "server.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Tanya",
+  "license": "MIT",
   "dependencies": {
-    "bcrypt": "^5.0.0",
-    "ejs": "^3.1.5",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-flash": "0.0.2",
-    "express-session": "^1.17.1",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
-  },
-  "devDependencies": {
-    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.7",
     "nodemon": "^2.0.4"
   }
 }
