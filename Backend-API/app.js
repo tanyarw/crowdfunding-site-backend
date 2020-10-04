@@ -3,7 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const mongoConnect = require('./utils/db/connection');
+
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
@@ -29,7 +29,7 @@ app.use((req,res,next)=>{
     }
     next();
 });
-mongoConnect;
+
          
 app.use('/auth',authRoutes);
 app.use('/fundraiser',fundraiserRoutes);
