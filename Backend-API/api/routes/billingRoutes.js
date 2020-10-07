@@ -8,7 +8,7 @@ const billingHandler=  require('../handler/billingHandler');
 router.post('/:fundId',isAuth,billingHandler.makePayment);
 
 /**
-* @desc Route to make payment to a fun
+* @desc Route to make payment to a fund
 * @route /bill/:fundId
 * @type POST
 * @access "USER/ORGANISER/ADMIN"

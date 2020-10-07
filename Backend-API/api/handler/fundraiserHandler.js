@@ -92,7 +92,7 @@ exports.updateFundraiser = async (req, res, next) => {
     User.findById(userId)
     .then(user =>{
       const role = user.role;
-      if (role==="organiser"){
+  if (role==="organiser"){
   const fundId= req.params.fundId;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -118,16 +118,15 @@ exports.updateFundraiser = async (req, res, next) => {
     fundraiser.habitat= habitat;
     fundraiser.description = description;
     fundraiser.status= status; 
-  });
-    fundraiser
-    .save()
-   
+    fundraiser.save()
+  })
+  
   .then(result => {
     res.status(200).json({
       message: 'Fundraiser updated!', 
       post: result 
 
-    });
+    })
   })
   .catch(err => {
     if (!err.statusCode) {
@@ -142,7 +141,12 @@ exports.updateFundraiser = async (req, res, next) => {
 }
     })
 
-
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
 }
 
 //Get one fundraiser
