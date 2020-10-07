@@ -35,7 +35,11 @@ const userSchema= new Schema({
         type:String,
         enum:['admin','organiser','user'],
         required: true,
-    }
+    },
+    bills:[{
+        type: Schema.Types.ObjectId,
+        ref:'billing'
+    }]
 });
 
 module.exports= mongoose.model('User', userSchema);

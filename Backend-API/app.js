@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./api/routes/authRoutes'); 
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
 const userRoutes = require('./api/routes/userRoutes'); 
+const billingRoutes = require('./api/routes/billingRoutes');
 //CLOSE IMPORT OF THE ROUTES
 mongoose.Promise= global.Promise;
 
@@ -34,6 +35,7 @@ app.use((req,res,next)=>{
 app.use('/auth',authRoutes);
 app.use('/fundraiser',fundraiserRoutes);
 app.use('/user',userRoutes);
+app.use('/bill',billingRoutes);
 app.use((error, req,res,next)=>{
     console.log(error);
     const status= error.statusCode || 500;

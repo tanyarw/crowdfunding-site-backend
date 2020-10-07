@@ -30,3 +30,5 @@ const billingSchema= new Schema({
         require: true
     }
 })
+
+module.exports= mongoose.model('Billing', billingSchema);
