@@ -201,7 +201,7 @@ exports.deleteFundraiser = (req, res, next) => {
         throw error;
       }
       if (fundraiser.userId.toString() !== req.userId) {
-        if (req.userId !== "5f7cdeb47d316a86d2ce72c2"){
+        if (req.userId !== "5f7d79669a69a44509b2a735"){
         const error = new Error('Not authorized!');
         error.statusCode = 403;
         throw error;
