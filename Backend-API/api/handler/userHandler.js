@@ -31,9 +31,6 @@ exports.updateUser = async (req, res, next) => {
       user.save()
       res.status(200).json({ message: 'User updated!', post: user});
     })
-
-      
- 
     .catch(err => {
       if (!err.statusCode) {
         err.statusCode = 500;

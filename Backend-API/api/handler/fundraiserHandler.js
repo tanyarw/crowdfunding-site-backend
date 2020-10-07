@@ -6,45 +6,70 @@ const { validationResult } = require('express-validator');
 
 //POST a fundraiser
 exports.postFundraiser = async (req, res, next) => {
-    
-    const name= req.body.name;
-    const scfname= req.body.scientificName;
-    const habitat= req.body.habitat;
-    const description = req.body.description;
-    const status= req.body.status;
-    let creator;
-    const fundraiser = new Fundraiser({
-        name: name,
-        scfname: scfname,
-        habitat: habitat,
-        description : description,
-        status: status,
-        userId: req.userId
-    });
-    return fundraiser
-    .save()
-    .then(result=>{
-      return User.findById(req.userId);
-    })
- 
-  .then(user => {
-    creator = user;
-    user.fundraisers.push(fundraiser);
-    return user.save();
-  })
-    .then(result => {
-        res.status(201).json({ message: 'New Fundraiser Creater', 
-        FundraiserId: fundraiser._id , 
-        fundraiser: fundraiser,
-        creator: { _id: creator._id, name: creator.name }
-      });
-      })
-      .catch(err => {
-        if (!err.statusCode) {
-          err.statusCode = 500;
+    const userId=  req.userId
+    User.findById(userId)
+    .then(user =>{
+      const role = user.role;
+      if (role==="organiser"){
+        const name= req.body.name;
+        const scfname= req.body.scientificName;
+        const habitat= req.body.habitat;
+        const description = req.body.description;
+        const status= req.body.status;
+        let creator;
+        const fundraiser = new Fundraiser({
+            name: name,
+            scfname: scfname,
+            habitat: habitat,
+            description : description,
+            status: status,
+            userId: req.userId,
+            
+        });
+        return fundraiser
+        .save()
+        .then(result=>{
+          return User.findById(req.userId);
+        })
+      
+      .then(user => {
+        if(!user){
+          const error = new Error('Could not find user.');
+          error.statusCode = 404;
+          throw error;
         }
-        next(err);
-      });
+        creator = user;
+        user.fundraisers.push(fundraiser);
+        user.save();
+      })
+        .then(result => {
+            res.status(201).json({ message: 'New Fundraiser Creater', 
+            FundraiserId: fundraiser._id , 
+            fundraiser: fundraiser,
+            creator: { _id: userId._id, name: userId.name }
+          });
+          })
+          .catch(err => {
+            if (!err.statusCode) {
+              err.statusCode = 500;
+            }
+            next(err);
+          });
+      }
+      else{
+        const error = new Error('You are not an organiser!!');
+        error.statusCode = 422;
+        throw error;
+      }
+    })
+    
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });  
+  
 }
 
 //GET ALL FUNDRAISERS
@@ -63,6 +88,11 @@ exports.getAllFundraiser = async (req, res, next) => {
 
 //Update a fundraiser
 exports.updateFundraiser = async (req, res, next) => {
+  const userId=  req.userId
+    User.findById(userId)
+    .then(user =>{
+      const role = user.role;
+      if (role==="organiser"){
   const fundId= req.params.fundId;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -105,6 +135,12 @@ exports.updateFundraiser = async (req, res, next) => {
     }
     next(err);
   });
+}else{
+  const error = new Error('You are not an organiser!!');
+  error.statusCode = 422;
+  throw error;
+}
+    })
 
 
 }
@@ -151,6 +187,11 @@ exports.getMyFundraiser = async (req, res, next) => {
 
 //delete fundraiser
 exports.deleteFundraiser = (req, res, next) => {
+  const userId=  req.userId
+    User.findById(userId)
+    .then(user =>{
+      const role = user.role;
+      if (role==="organiser" || role==="admin"){
   const fundId= req.params.fundId;
   Fundraiser.findById(fundId)
     .then(fundraiser => {
@@ -160,9 +201,11 @@ exports.deleteFundraiser = (req, res, next) => {
         throw error;
       }
       if (fundraiser.userId.toString() !== req.userId) {
+        if (req.userId !== "5f7cdeb47d316a86d2ce72c2"){
         const error = new Error('Not authorized!');
         error.statusCode = 403;
         throw error;
+        }
       }
       return Fundraiser.findByIdAndRemove(fundId);
     })
@@ -182,4 +225,17 @@ exports.deleteFundraiser = (req, res, next) => {
       }
       next(err);
     });
+  }
+  else{
+    const error = new Error('You are not an organiser or the admin!!');
+    error.statusCode = 422;
+    throw error;
+  }
+  })
+  .catch(err => {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  });
 };

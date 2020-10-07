@@ -30,7 +30,12 @@ const userSchema= new Schema({
         type: Schema.Types.ObjectId,
         ref:'fundraiser'
     }
-    ]
+    ],
+    role:{
+        type:String,
+        enum:['admin','organiser','user'],
+        required: true,
+    }
 });
 
 module.exports= mongoose.model('User', userSchema);

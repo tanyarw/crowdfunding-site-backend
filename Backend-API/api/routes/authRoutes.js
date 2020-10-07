@@ -25,7 +25,8 @@ router.post('/signUp',[
     })
     .normalizeEmail(),
     body('password').trim().isLength({min:8}),
-    body('name').trim().not().isEmpty()
+    body('name').trim().not().isEmpty(),
+    body('role').not().isEmpty()
 ],
     authHandler.signup
 );
