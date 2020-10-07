@@ -14,6 +14,7 @@ exports.makePayment= async (req, res, next) => {
     let creator;
     let fund;
      const billing = new Billing ({
+         userId: userId,
          fundId :fundId,
          amount: amount,
          tax: tax,
@@ -43,11 +44,11 @@ exports.makePayment= async (req, res, next) => {
           throw error;
         }
         fund = fundraiser;
-        user.bills.push(billing);
-        user.save();
+        fundraiser.bills.push(billing);
+        fundraiser.save();
       })
    .then(result => {
-    res.status(201).json({ message: 'Bill generater!', BillId: billing._id , Bill: billing, creator: { _id: userId._id, name: userId.name }});
+    res.status(201).json({ message: 'Bill generater!', BillId: billing._id , Bill: billing, creator: { _id: creator._id, name: creator.name }, fundraiser :{ _id: fund._id, name: fund.name } });
   })
   .catch(err => {
     if (!err.statusCode) {
@@ -56,3 +57,4 @@ exports.makePayment= async (req, res, next) => {
     next(err);
   });
 }
+

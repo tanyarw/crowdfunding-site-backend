@@ -26,7 +26,11 @@ const fundRaiserSchema= new Schema({
     status:{
         type:String,
         enum:['EX','EW','CR','EN','VU','NT','LC','DD','NE'],
-    }
+    },
+    bills:[{
+        type: Schema.Types.ObjectId,
+        ref:'billing'
+    }]
 })
 
 
