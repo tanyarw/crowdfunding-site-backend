@@ -29,5 +29,11 @@ router.get('/myFundBills/:fundId',isAuth,billingHandler.getAllbillsbyFID);
 * @type POST
 * @access "ORGANISER/ADMIN"
 */
-
+router.get('/myFundCollection/:fundId',isAuth,billingHandler.getOfaFID);
+/**
+* @desc Route to get total collection a particular fund
+* @route /bill/myFundCollection/:fundId
+* @type POST
+* @access "ORGANISER/ADMIN"
+*/
 module.exports = router;

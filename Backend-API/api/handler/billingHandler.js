@@ -112,3 +112,41 @@ exports.getAllbillsbyFID = async (req, res, next) => {
   });  
 }
 
+
+//get a fundraiser's total collection 
+exports.getOfaFID = async (req, res, next) => {
+    const fundId = req.params.fundId;
+    Fundraiser.findById(fundId)
+    .then(fundraiser =>{
+        const user = fundraiser.userId;
+        if (user===req.userId||req.userId ==="5f7d79669a69a44509b2a735"){
+        let billing = Billing.find({fundId:fundId})
+        .then(result => {
+        
+        const len = result.length;
+        var fund_total=0;
+        for (i=0 ; i<len;i++){
+            let amount = result[i].amount;
+            fund_total = fund_total+ parseInt(amount);
+        }
+        res.status(201).json({ message: 'the total is got', total_collection: String(fund_total)});
+        })
+        .catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+        });
+    }else{
+        const error = new Error('You are not an organiser of this fund!!');
+        error.statusCode = 422;
+        throw error;
+    }
+})
+.catch(err => {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  });  
+}
