@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+var cookieParser = require('cookie-parser')
 module.exports = (req, res, next) => {
   const authHeader = req.get('Authorization');
   if (!authHeader) {
@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     error.statusCode = 401;
     throw error;
   }
-  const token = authHeader.split(' ')[1];
+  const token = req.cookies.token;
   let decodedToken;
   try {
     decodedToken = jwt.verify(token, 'wildsprintkey');

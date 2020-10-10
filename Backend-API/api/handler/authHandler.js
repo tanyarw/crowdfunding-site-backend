@@ -2,6 +2,7 @@ const User = require('../../Models/User');
 const {validationResult} = require('express-validator');
 const bcrypt= require('bcryptjs')
 const jwt = require('jsonwebtoken')
+var cookieParser = require('cookie-parser')
 
 exports.signup = (req, res, next) => {
     const errors = validationResult(req);
@@ -28,6 +29,7 @@ exports.signup = (req, res, next) => {
       })
       .then(result => {
         res.status(201).json({ message: 'User created!', userId: result._id });
+        console.log(isAuth);
       })
       .catch(err => {
         if (!err.statusCode) {
@@ -65,8 +67,11 @@ exports.signup = (req, res, next) => {
         },'wildsprintkey',{expiresIn:'1h'});
       
         res.cookie('token', token);
+        console.log('Cookies: ', req.cookies.token);
+        var isAuth = global= req.cookies.token;
         res.status(200)
         return res.render("event");
+       
       })
       
     

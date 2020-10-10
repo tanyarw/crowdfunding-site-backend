@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
+var cookieParser = require('cookie-parser');
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'images');
@@ -44,6 +45,7 @@ app.use(
     multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
   );
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use(cookieParser())
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Origin','*');
     res.header('Access-Control-Allow-Header','Origin,X-Requested-with,Content-Type,Accept,Authorization');
