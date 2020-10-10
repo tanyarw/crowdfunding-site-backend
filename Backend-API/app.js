@@ -96,5 +96,21 @@ app.get("/donate", function (req, res) {
     res.render("donate"); 
 });
 
+app.get("/myBills", function (req, res) { 
+    res.render("myBills"); 
+});
+
+app.get("/myFundBills", function (req, res) { 
+    res.render("myFunBills"); 
+});
+
+app.get("/update", function (req, res) { 
+    res.render("update"); 
+});
+
+app.get("/gallery", function (req, res) { 
+    res.render("gallery"); 
+});
+
 
 module.exports = app;
