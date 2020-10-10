@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wildsprint</title>
+        <style>
+            .container{
+            margin: auto;
+            background-color: #fff;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.2);
+            }
+            input{
+            margin-left:22%;
+            }
+            .input-box{
+            width: 320px;
+            height:30px;
+            }
+            #heading{
+            text-align: center;
+            font-size: 30px;
+            font-style: Delicious-BoldItalic;
+            }
+            .title{
+                margin-left: 22%;
+            }
+            #submit{
+            margin-left: 22%;
+            margin-bottom: 20px;
+            width: 320px;
+            height:40px;
+            border-radius: 10px;
+            background-color: #B39CD0;
+            font-size: 20px;
+            color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <form class="simple-form" method="post" action="/fundraiser/start">
+        <div class="container">
+            <h1 id="heading" >START FUNDRAISER</h1><br>
+
+            <input type="text" name="" id=""><br><br>
+
+            <input type="text" name="" id=""><br><br>
+
+            <textarea name="" id="" cols="30" rows="10"></textarea><br><br>
+
+            <textarea name="" id="" cols="30" rows="10"></textarea><br><br>
+                   
+            <input type="radio" name="status" id="user" value="EX">
+            <label for="user">EX</label><br>
+
+            <input type="radio" name="status" id="user" value="EW">
+            <label for="user">EW</label><br>
+
+            <input type="radio" name="status" id="user" value="CR">
+            <label for="user">CR</label><br>
+
+            <input type="radio" name="status" id="user" value="EN">
+            <label for="user">EN</label><br>
+
+            <input type="radio" name="status" id="user" value="VU">
+            <label for="user">VU</label><br>
+
+            <input type="radio" name="status" id="user" value="NT">
+            <label for="user">NT</label><br>
+
+            <input type="radio" name="status" id="user" value="LC">
+            <label for="user">LC</label><br>
+
+            <input type="radio" name="status" id="user" value="DD">
+            <label for="user">DD</label><br>
+
+            <input type="radio" name="status" id="user" value="NE">
+            <label for="user">NE</label><br><br>
+
+            <input type="submit" id="submit" value="Submit">
+        </div>
+    </body>
+</html>
