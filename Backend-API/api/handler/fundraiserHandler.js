@@ -81,7 +81,10 @@ exports.postFundraiser = async (req, res, next) => {
 exports.getAllFundraiser = async (req, res, next) => {
     let fundraiser = Fundraiser.find()
     .then(result => {
-      res.status(201).json({ message: 'All Fundraiser Got', fundraiser: result});
+      res.status(201)
+      res.render('event', {
+          jsonData: JSON.stringify(result)
+        })
     })
     .catch(err => {
       if (!err.statusCode) {

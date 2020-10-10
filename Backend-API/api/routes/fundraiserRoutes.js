@@ -4,35 +4,35 @@ const Fundraiser = require('../../Models/Fundraiser');
 const fundraiserHandler=  require('../handler/fundraiserHandler');
 const isAuth = require('../../middleware/is-auth');
 
-router.post('/start',isAuth,fundraiserHandler.postFundraiser);
+router.post('/start',fundraiserHandler.postFundraiser);
 /**
 * @desc Route to start Fundraiser
 * @route /fundraiser/start
 * @type POST
 * @access "ORGANISER"
 */
-router.get('/',isAuth,fundraiserHandler.getAllFundraiser);
+router.get('/',fundraiserHandler.getAllFundraiser);
 /**
 * @desc Gets all Fundraiser
 * @route /fundraiser/
 * @type GET
 * @access "USER/ADMIN/ORGANISER"
 */
-router.get('/get/:fundId',isAuth,fundraiserHandler.getOneFundraiser);
+router.get('/get/:fundId',fundraiserHandler.getOneFundraiser);
 /**
 * @desc Get one Fundraiser's data
 * @route /fundraiser/get/:fundId
 * @type GET
 * @access "USER/ADMIN/ORGANISER"
 */
-router.patch('/update/:fundId',isAuth,fundraiserHandler.updateFundraiser);
+router.patch('/update/:fundId',fundraiserHandler.updateFundraiser);
 /**
 * @desc Update Fundraiser data
 * @route /fundraiser/update/:fundId
 * @type PATCH
 * @access "ORGANISER"
 */
-router.delete('/delete/:fundId',isAuth,fundraiserHandler.deleteFundraiser);
+router.delete('/delete/:fundId',fundraiserHandler.deleteFundraiser);
 /**
 * @desc Delete Fundraiser data
 * @route /fundraiser/delete/:fundId

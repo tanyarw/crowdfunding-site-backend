@@ -70,7 +70,7 @@ exports.signup = (req, res, next) => {
         console.log('Cookies: ', req.cookies.token);
         var isAuth = global= req.cookies.token;
         res.status(200)
-        return res.render("event");
+        return res.redirect("/fundraiser" );
        
       })
       
