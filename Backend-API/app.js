@@ -52,6 +52,25 @@ app.get("/signup", function (req, res) {
     res.render("signup"); 
 });
 
+app.get("/form", function (req, res) { 
+    res.render("form"); 
+});
+
+app.get("/profile", function (req, res) { 
+    res.render("profile"); 
+});
+
+app.get("/fund", function (req, res) { 
+    res.render("fund"); 
+});
+
+app.get("/event", function (req, res) { 
+    res.render("event"); 
+});
+
+app.get("/donate", function (req, res) { 
+    res.render("donate"); 
+});
 
 
 module.exports = app;
