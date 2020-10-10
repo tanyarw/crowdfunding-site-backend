@@ -10,11 +10,17 @@ exports.postFundraiser = async (req, res, next) => {
     .then(user =>{
       const role = user.role;
       if (role==="organiser"){
+        const imageUrl = req.file.path;
         const name= req.body.name;
         const scfname= req.body.scientificName;
         const habitat= req.body.habitat;
         const description = req.body.description;
         const status= req.body.status;
+        if (!req.file) {
+            const error = new Error('No image provided.');
+            error.statusCode = 422;
+            throw error;
+          }
         let creator;
         const fundraiser = new Fundraiser({
             name: name,
@@ -23,7 +29,7 @@ exports.postFundraiser = async (req, res, next) => {
             description : description,
             status: status,
             userId: req.userId,
-            
+            image: imageUrl
         });
         return fundraiser
         .save()
@@ -104,7 +110,7 @@ exports.updateFundraiser = async (req, res, next) => {
   const habitat= req.body.habitat;
   const description = req.body.description;
   const status= req.body.status;
-
+  const image = req.body.image;
   Fundraiser.findById(fundId)
   .then(fundraiser=>{
     if(!fundraiser){
@@ -117,6 +123,7 @@ exports.updateFundraiser = async (req, res, next) => {
     fundraiser.habitat= habitat;
     fundraiser.description = description;
     fundraiser.status= status; 
+    fundraiser.image = image;
     fundraiser.save()
   })
   

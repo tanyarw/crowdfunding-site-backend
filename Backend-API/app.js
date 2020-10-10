@@ -3,7 +3,27 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const multer = require('multer');
+const path = require('path');
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+      cb(null, new Date().toISOString() + '-' + file.originalname);
+    }
+  });
+  const fileFilter = (req, file, cb) => {
+    if (
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jpeg'
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  };  
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
@@ -20,6 +40,10 @@ app.use(morgan('dev'));
 app.use(express.static('upload'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(
+    multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+  );
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Origin','*');
     res.header('Access-Control-Allow-Header','Origin,X-Requested-with,Content-Type,Accept,Authorization');
