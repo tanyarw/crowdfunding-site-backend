@@ -40,15 +40,19 @@
         </style>
     </head>
     <body>
-        <form class="simple-form" method="post" action="/auth/login">
+        <form class="simple-form" method="post" action="/user/update">
         <div class="container">
-            <h1 id="heading" >MY FUNDRAISERS</h1><br>
-            
-            <button type="submit" id="submit">UPDATE</button>
-            
-            <button type="submit" id="submit">NEW</button>
+            <h1 id="heading" >UPDATE PROFILE</h1><br>
 
+            <input type="text" name="name" id="name" placeholder="Name" class="input-box"><br><br>
 
+            <input type="text" name="lastname" id="lastname" placeholder="Last Name" class="input-box"><br><br>
+
+            <input type="text" name="phone" id="phone" pattern="[0-9]{10}" placeholder="Phone Number" class="input-box"><br><br>
+
+            <input type="text" name="profession" id="profession" placeholder="Profession" class="input-box"><br><br>
+
+            <input type="submit" id="submit" value="Submit">
         </div>
     </body>
 </html>
