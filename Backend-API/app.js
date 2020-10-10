@@ -73,6 +73,9 @@ app.use((error, req,res,next)=>{
 app.get("/login", function (req, res) { 
     res.render("login"); 
 });
+app.get("/user/update/:userId", function (req, res) { 
+  res.render("profile.ejs"); 
+});
 
 app.get("/signup", function (req, res) { 
     res.render("signup"); 

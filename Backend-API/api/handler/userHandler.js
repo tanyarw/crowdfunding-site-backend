@@ -6,7 +6,7 @@ const { validationResult } = require('express-validator');
 exports.updateUser = async (req, res, next) => {
     const userId= req.params.userId;
     const tabuserId= req.userId;
-    if (tabuserId== userId){
+    if (tabuserId!= userId){
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed, entered data is incorrect.');
@@ -48,11 +48,14 @@ exports.updateUser = async (req, res, next) => {
   exports.getUser = async (req, res, next) => {
     const userId= req.params.userId;
     const tabuserId= req.userId;
-    if (tabuserId== userId){
+    if (tabuserId!= userId){
       User.findById(userId)
       .then(result=>{
-        
-        res.status(200).json({ message: 'User Details Got', user: result});
+        console.log(JSON.stringify(result))
+        res.status(200)
+        res.render('profile', {
+          jsonData: (result)
+        })
       })
       .catch(err => {
         if (!err.statusCode) {

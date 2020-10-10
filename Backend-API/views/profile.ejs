@@ -40,10 +40,18 @@
         </style>
     </head>
     <body>
-        <form class="simple-form" method="post" action="/auth/login">
+        <form class="simple-form" method="post" action="/update">
         <div class="container">
             <h1 id="heading" >MY PROFILE</h1><br>
+            <input type="text" name="name" id="name" placeholder=<%= jsonData.name %> ><br><br>
 
+            <input type="text" name="lastname" id="lastname" placeholder=<%= jsonData.lastname %> ><br><br>
+
+            <input type="text" name="phone" id="phone" pattern="[0-9]{10}" placeholder=<%= jsonData.phone %> ><br><br>
+
+            <input type="text" name="profession" id="profession" placeholder=<%= jsonData.profession %>  ><br><br>
+
+           
             <button type="submit" id="submit">UPDATE</button>
             
         </div>
