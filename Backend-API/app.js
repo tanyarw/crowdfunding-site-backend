@@ -3,7 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
@@ -16,6 +16,9 @@ mongoose
      .connect( "mongodb+srv://ng:ng@wildsprint.ksltt.mongodb.net/WildSprint?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
      .then(() => console.log( 'Database Connected' ))
      .catch(err => console.log( err ));
+     
+
+app.use(cors())
 app.use(morgan('dev'));
 app.use(express.static('upload'));
 app.use(bodyParser.urlencoded({extended: false}));

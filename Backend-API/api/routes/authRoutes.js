@@ -16,11 +16,22 @@ router.post('/signUp',[
         return User.findOne({email : value})
         .then(userDoc=>{
             if(userDoc){
-                return Promise.reject('Email already exists');}
-            else{
+               
+                    const error = new Error('Email already exists');
+                    error.statusCode = 422;
+                    throw error;
+
+            
+            }else{
                 console.log('No matching Email');
             }
-        });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+              err.statusCode = 500;
+            }
+            next(err);
+          });
         
     })
     .normalizeEmail(),

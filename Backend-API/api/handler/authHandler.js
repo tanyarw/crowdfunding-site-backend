@@ -7,8 +7,7 @@ exports.signup = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed.');
-      error.statusCode = 422;
-      error.data = errors.array();
+      error.statusCode = 401;
       throw error;
     }
     const email = req.body.email;
@@ -50,7 +49,7 @@ exports.signup = (req, res, next) => {
               throw error;
             }
             loadedUser = user;
-            console.log('comparing')
+            //console.log('comparing')
             return bcrypt.compare(password, user.password);
           })
       .then(isEqual => {
@@ -63,7 +62,7 @@ exports.signup = (req, res, next) => {
            email: loadedUser.email,
            userId: loadedUser._id.toString() 
         },'twisnoob',{expiresIn:'1h'});
-        res.status(200).json({token:token, userId: loadedUser._id.toString()})
+        res.status(200).json({token:token, role:loadedUser.role,name:loadedUser.name, userId: loadedUser._id.toString()})
       })
       .catch(err=>{
           if(!err.statusCode){
