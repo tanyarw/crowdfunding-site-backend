@@ -57,7 +57,19 @@ app.use((req,res,next)=>{
     next();
 });
 
+<<<<<<< Updated upstream
 app.set("view engine", "ejs");        
+=======
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'images/');
+    },
+    filename: (req, file, cb) => {
+      cb(null,  file.originalname);
+    }
+  });
+app.use(multer({ storage: fileStorage }).single('image'));        
+>>>>>>> Stashed changes
 app.use('/auth',authRoutes);
 app.use('/fundraiser',fundraiserRoutes);
 app.use('/user',userRoutes);
