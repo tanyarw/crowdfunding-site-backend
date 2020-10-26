@@ -10,14 +10,14 @@ router.post('/start',isAuth,fundraiserHandler.postFundraiser);
 * @type POST
 * @access "ORGANISER"
 */
-router.get('/',isAuth,fundraiserHandler.getAllFundraiser);
+router.get('/',fundraiserHandler.getAllFundraiser);
 /**
 * @desc Gets all Fundraiser
 * @route /fundraiser/
 * @type GET
 * @access "USER/ADMIN/ORGANISER"
 */
-router.get('/get/:fundId',isAuth,fundraiserHandler.getOneFundraiser);
+router.get('/get/:fundId',fundraiserHandler.getOneFundraiser);
 /**
 * @desc Get one Fundraiser's data
 * @route /fundraiser/get/:fundId

@@ -13,7 +13,7 @@ const billingRoutes = require('./api/routes/billingRoutes');
 mongoose.Promise= global.Promise;
 
 mongoose
-     .connect( "mongodb+srv://ng:ng@wildsprint.ksltt.mongodb.net/WildSprint?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+     .connect( "mongodb+srv://tanya_1:tanya_1@iwp.c0ufz.mongodb.net/wildsprint?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
      .then(() => console.log( 'Database Connected' ))
      .catch(err => console.log( err ));
      
