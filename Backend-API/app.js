@@ -4,11 +4,14 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const multer = require('multer');
+const path = require('path');
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
 const userRoutes = require('./api/routes/userRoutes'); 
 const billingRoutes = require('./api/routes/billingRoutes');
+
 //CLOSE IMPORT OF THE ROUTES
 mongoose.Promise= global.Promise;
 
@@ -19,10 +22,12 @@ mongoose
      
 
 app.use(cors())
+
 app.use(morgan('dev'));
 app.use(express.static('upload'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Origin','*');
     res.header('Access-Control-Allow-Header','Origin,X-Requested-with,Content-Type,Accept,Authorization');
@@ -33,8 +38,15 @@ app.use((req,res,next)=>{
     }
     next();
 });
-
-         
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+      cb(null, new Date().toISOString() + '-' + file.originalname);
+    }
+  });
+app.use(multer({ storage: fileStorage }).single('image'));        
 app.use('/auth',authRoutes);
 app.use('/fundraiser',fundraiserRoutes);
 app.use('/user',userRoutes);
