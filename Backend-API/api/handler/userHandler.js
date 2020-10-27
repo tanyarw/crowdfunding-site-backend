@@ -17,6 +17,7 @@ exports.updateUser = async (req, res, next) => {
     const imageUrl = req.file.path;
     const lastname= req.body.lastname;
     const phone = req.body.phone;
+ 
     const profession= req.body.profession;
     User.findById(userId)
     .then(user=>{
