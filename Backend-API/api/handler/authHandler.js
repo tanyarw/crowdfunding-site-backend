@@ -61,7 +61,7 @@ exports.signup = (req, res, next) => {
         const token= jwt.sign({
            email: loadedUser.email,
            userId: loadedUser._id.toString() 
-        },'twisnoob',{expiresIn:'1h'});
+        },'teenagemutantninjaturtle',{expiresIn:'1h'});
         res.status(200).json({token:token, role:loadedUser.role,name:loadedUser.name, userId: loadedUser._id.toString()})
       })
       .catch(err=>{
