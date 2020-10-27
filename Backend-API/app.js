@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const multer = require('multer');
+
 const path = require('path');
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
@@ -38,15 +38,8 @@ app.use((req,res,next)=>{
     }
     next();
 });
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'images');
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.originalname);
-    }
-  });
-app.use(multer({ storage: fileStorage }).single('image'));   
+
+   
 app.use(express.static(path.join(__dirname,'image')));     
 app.use('/auth',authRoutes);
 app.use('/fundraiser',fundraiserRoutes);

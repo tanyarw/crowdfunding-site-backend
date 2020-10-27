@@ -50,7 +50,7 @@ exports.updateUser = async (req, res, next) => {
     const tabuserId= req.userId;
     if (tabuserId== userId){
       User.findById(userId)
-      .then(resut=>{
+      .then(result=>{
         res.status(200).json({ message: 'User Details Got', user: result});
       })
       .catch(err => {
