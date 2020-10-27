@@ -36,6 +36,9 @@ const userSchema= new Schema({
         enum:['admin','organiser','user'],
         required: true,
     },
+    pPicture:{
+        type:String,
+    },
     bills:[{
         type: Schema.Types.ObjectId,
         ref:'billing'

@@ -6,6 +6,7 @@ const { validationResult } = require('express-validator');
 exports.updateUser = async (req, res, next) => {
     const userId= req.params.userId;
     const tabuserId= req.userId;
+    console.log(userId);
     if (tabuserId== userId){
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -13,7 +14,7 @@ exports.updateUser = async (req, res, next) => {
       error.statusCode = 422;
       throw error;
     }
-    const name= req.body.name;
+    const imageUrl = req.file.path;
     const lastname= req.body.lastname;
     const phone = req.body.phone;
     const profession= req.body.profession;
@@ -24,10 +25,10 @@ exports.updateUser = async (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
-      user.name= name;
       user.lastname= lastname;
       user.phone = phone;
       user.profession= profession;
+      user.pPicture = imageUrl;
       user.save()
       res.status(200).json({ message: 'User updated!', post: user});
     })
