@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
 const path = require('path');
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
@@ -39,8 +38,8 @@ app.use((req,res,next)=>{
     next();
 });
 
-   
-app.use(express.static(path.join(__dirname,'image')));     
+app.use('/images',express.static(path.join(__dirname,'images')));
+
 app.use('/auth',authRoutes);
 app.use('/fundraiser',fundraiserRoutes);
 app.use('/user',userRoutes);
