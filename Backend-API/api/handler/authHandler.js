@@ -71,3 +71,41 @@ exports.signup = (req, res, next) => {
           next(err);
       })
   }
+
+  exports.forgot = (req, res, next) => {
+    const email= req.body.email;
+    const password = req.body.password;
+    console.log(email)
+    console.log(password)
+    User.findOne({ email: email })
+      .then(user=>{
+        if (!user) {
+           
+          const error = new Error('A user with this email could not be found.');
+          error.statusCode = 401;
+          throw error;
+        }
+        bcrypt
+          .hash(password, 12)
+          .then(hashedPw => {
+            console.log(hashedPw)
+            User.findById(userId)
+              .then(user=>{
+                if(!user){
+                  const error = new Error('Could not find user.');
+                  error.statusCode = 404;
+                  throw error;
+                }
+                user.password= hashedPw;
+                user.save()
+                res.status(200).json({ message: 'Password updated!', post: user});
+              })      
+              .catch(err => {
+                if (!err.statusCode) {
+                  err.statusCode = 500;
+                }
+                next(err);
+              });
+          });
+      });   
+  }

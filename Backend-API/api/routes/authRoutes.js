@@ -57,4 +57,12 @@ router.post('/login',authHandler.login);
 * @access "PUBLIC"
 */
 
+router.patch('/forgot',authHandler.forgot);
+/**
+* @desc Route to signup
+* @route /auth/forgot
+* @type PATCH
+* @access "PUBLIC"
+*/
+
 module.exports = router;
