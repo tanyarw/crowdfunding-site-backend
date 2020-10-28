@@ -11,7 +11,10 @@ exports.postFundraiser = async (req, res, next) => {
     .then(user =>{
       const role = user.role;
       if (role==="organiser"){
+        console.log("THSI IS REQ",req)
+        console.log(req.file);
         const imageUrl = req.file.path;
+        
         const name= req.body.name;
         const scfname= req.body.scientificName;
         const habitat= req.body.habitat;

@@ -1,12 +1,14 @@
 const bcrypt= require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../../Models/User');
+const path = require('path');
 const { validationResult } = require('express-validator');
 
 exports.updateUser = async (req, res, next) => {
     const userId= req.params.userId;
     const tabuserId= req.userId;
     console.log(userId);
+    console.log(tabuserId)
     if (tabuserId== userId){
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -17,7 +19,6 @@ exports.updateUser = async (req, res, next) => {
     const imageUrl = req.file.path;
     const lastname= req.body.lastname;
     const phone = req.body.phone;
- 
     const profession= req.body.profession;
     User.findById(userId)
     .then(user=>{
@@ -43,9 +44,8 @@ exports.updateUser = async (req, res, next) => {
 
       res.status(422).json('User account does not match');
       
-}
-  
   }
+}
   
   exports.getUser = async (req, res, next) => {
     const userId= req.params.userId;
