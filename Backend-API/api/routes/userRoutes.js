@@ -18,4 +18,11 @@ router.get('/get/:userId',isAuth,userHandler.getUser);
 * @type GET
 * @access "USER/ORGANISER/ADMIN"
 */
+router.patch('/password/:userId',isAuth,userHandler.updatePassword);
+/**
+* @desc Route to Change user password
+* @route /user/password/:userId
+* @type PATCH
+* @access "USER/ORGANISER/ADMIN"
+*/
 module.exports = router;
