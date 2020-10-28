@@ -40,5 +40,11 @@ router.delete('/delete/:fundId',isAuth,fundraiserHandler.deleteFundraiser);
 * @type DELETE
 * @access "ORGANISER/ADMIN"
 */
-
+router.get('/myfunds/:userId',isAuth,fundraiserHandler.getMyFundraiser);
+/**
+* @desc Get user's Fundraisers data
+* @route /fundraiser/myfunds/:userId
+* @type GET
+* @access "ORGANISER"
+*/
 module.exports = router;

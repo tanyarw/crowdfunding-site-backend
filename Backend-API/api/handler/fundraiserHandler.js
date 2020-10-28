@@ -177,25 +177,20 @@ exports.getOneFundraiser = async (req, res, next) => {
   next(err);
 });
 };
+
 //Get my fundRaiser
 exports.getMyFundraiser = async (req, res, next) => {
-
   const userId= req.params.userId;
-  Fundraiser.findById(fundId)
+  let fundraiser = Fundraiser.find({userId:userId})
   .then(fundraiser=>{
-    if(!fundraiser){
-      const error = new Error('Could not find fundraiser.');
-      error.statusCode = 404;
-      throw error;
+    res.status(201).json({ message: 'Fundraisers Got', fundraiser: fundraiser});  
+  })
+  .catch(err => {
+    if (!err.statusCode) {
+      err.statusCode = 500;
     }
-    res.status(201).json({ message: 'Fundraiser Got', fundraiser: fundraiser});  
-})
-.catch(err => {
-  if (!err.statusCode) {
-    err.statusCode = 500;
-  }
-  next(err);
-});
+    next(err);
+  });
 }
 
 //delete fundraiser

@@ -49,7 +49,7 @@ exports.makePayment= async (req, res, next) => {
         fundraiser.save();
       })
    .then(result => {
-    res.status(201).json({ message: 'Bill generater!', BillId: billing._id , Bill: billing, creator: { _id: creator._id, name: creator.name }, fundraiser :{ _id: fund._id, name: fund.name } });
+    res.status(201).json({ message: 'Bill generated!', BillId: billing._id , Bill: billing, creator: { _id: creator._id, name: creator.name }, fundraiser :{ _id: fund._id, name: fund.name } });
   })
   .catch(err => {
     if (!err.statusCode) {
