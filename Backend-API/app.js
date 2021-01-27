@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const multer = require('multer');
+require('dotenv').config()
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
@@ -16,7 +17,7 @@ const billingRoutes = require('./api/routes/billingRoutes');
 mongoose.Promise= global.Promise;
 
 mongoose
-     .connect( "mongodb+srv://tanya_1:tanya_1@iwp.c0ufz.mongodb.net/wildsprint?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+     .connect( process.env.ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
      .then(() => console.log( 'Database Connected' ))
      .catch(err => console.log( err ));
      
