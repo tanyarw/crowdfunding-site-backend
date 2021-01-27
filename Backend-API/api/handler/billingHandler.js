@@ -73,7 +73,6 @@ exports.getAllbillsbyUID = async (req, res, next) => {
       next(err);
     });
 }
-
 //get all bills for a fundraiser with total collection 
 exports.getAllbillsbyFID = async (req, res, next) => {
     const fundId = req.params.fundId;
