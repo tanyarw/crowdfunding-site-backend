@@ -9,5 +9,5 @@ Site Features:
 - Start a fundraiser if you are an organisation
 - Gallery of images
 
-## Entity Relationship Diagram
+## Overview
 ![ERdiag](er-diag.png)
