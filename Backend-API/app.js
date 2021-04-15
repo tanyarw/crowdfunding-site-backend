@@ -7,11 +7,16 @@ const cors = require('cors');
 const path = require('path');
 const multer = require('multer');
 require('dotenv').config()
+var RateLimit = require('express-rate-limit');
 //OPEN IMPORT OF THE ROUTES
 const authRoutes = require('./api/routes/authRoutes'); 
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
 const userRoutes = require('./api/routes/userRoutes'); 
 const billingRoutes = require('./api/routes/billingRoutes');
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 
 //CLOSE IMPORT OF THE ROUTES
 mongoose.Promise= global.Promise;
@@ -47,6 +52,27 @@ app.use((req,res,next)=>{
     }
     next();
 });
+
+const rateLimit = require("express-rate-limit");
+const testFunction =(req,res,next)=>{
+  //console.log(req);
+  console.log('LIMITING');
+  client.messages
+  .create({
+     body: 'DDos Attack in progress!',
+     from: '+14787968603',
+     to: '+918861312434'
+   })
+  .then(message => console.log(message));
+}
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 2,
+  onLimitReached: testFunction
+});
+app.use("/", apiLimiter);
+
+// only apply to requests that begin with /api/ 
 
 app.use('/images',express.static(path.join(__dirname,'images')));
 

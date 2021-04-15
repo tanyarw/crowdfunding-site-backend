@@ -61,7 +61,7 @@ exports.signup = (req, res, next) => {
         const token= jwt.sign({
            email: loadedUser.email,
            userId: loadedUser._id.toString() 
-        },'teenagemutantninjaturtle',{expiresIn:'1h'});
+        },process.env.JWT_KEY,{expiresIn:'1h'});
         res.status(200).json({token:token, role:loadedUser.role,name:loadedUser.name, userId: loadedUser._id.toString()})
       })
       .catch(err=>{
@@ -73,11 +73,12 @@ exports.signup = (req, res, next) => {
   }
 
   exports.forgot = (req, res, next) => {
-    const email= req.body.email;
+    const email= eval(req.body.email);
     const password = req.body.password;
-    console.log(email)
+    console.log(typeOf(email))
     console.log(password)
-    User.findOne({ email: email })
+    //let emailNew = JSON.parse(email)
+    User.findOne({ email: email})
       .then(user=>{
         if (!user) {
            
