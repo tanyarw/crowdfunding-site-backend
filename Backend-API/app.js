@@ -13,12 +13,15 @@ const authRoutes = require('./api/routes/authRoutes');
 const fundraiserRoutes = require('./api/routes/fundraiserRoutes'); 
 const userRoutes = require('./api/routes/userRoutes'); 
 const billingRoutes = require('./api/routes/billingRoutes');
-
+const hackedRoutes = require('./api/routes/hackedRoutes');
+//Twilio 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
+const Hacked = require('./Models/Hacked');
 //CLOSE IMPORT OF THE ROUTES
+
 mongoose.Promise= global.Promise;
 
 mongoose
@@ -57,23 +60,38 @@ const rateLimit = require("express-rate-limit");
 const testFunction =(req,res,next)=>{
   //console.log(req);
   console.log('LIMITING');
-  client.messages
+  var newAdd = req.connection.remoteAddress;
+  console.log('CLIENT ADDR: ', newAdd);
+  /*client.messages
   .create({
      body: 'DDos Attack in progress!',
      from: '+14787968603',
      to: '+918861312434'
    })
-  .then(message => console.log(message));
+  .then(message => console.log(message));*/
+  const ip= newAdd;
+  const website = 1;
+  const newHack = new Hacked({
+    ip:ip,
+    website:website,
+    attackType:'DDOS'
+  });
+  newHack.save().then(result=>{
+   // res.status(201).json({message:'We have notified the admin!'})
+   console.log('We have notified the admin!')
+  })
 }
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 2,
   onLimitReached: testFunction
 });
-app.use("/", apiLimiter);
+
+
+app.use("/auth", apiLimiter);
 
 // only apply to requests that begin with /api/ 
-
+app.use('/hacked', hackedRoutes);
 app.use('/images',express.static(path.join(__dirname,'images')));
 
 app.use('/auth',authRoutes);
