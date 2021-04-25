@@ -18,8 +18,9 @@ const hackedRoutes = require('./api/routes/hackedRoutes');
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
-
+const http = require('http');
 const Hacked = require('./Models/Hacked');
+const ipfilter = require('express-ipfilter').IpFilter
 //CLOSE IMPORT OF THE ROUTES
 
 mongoose.Promise= global.Promise;
@@ -44,6 +45,30 @@ app.use(morgan('dev'));
 app.use(express.static('upload'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+const ips = []
+ 
+// Create the server
+app.use((req,res,next)=>{
+  var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+    // exit if it's a particular ip
+    console.log("FOUNF IP",ip)
+    Hacked.findOne({ ip: ip }).then(test=>{
+        
+        if(test!==null){
+          console.log("FOUNF test",test)
+          ips.push(test.ip)
+          next();
+        }else{
+          ips.pop()
+          next();
+        }
+        
+    })
+  
+})
+console.log('IPS: ',ips)
+app.use(ipfilter(ips))
+ips.pop()
 
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Origin','*');
@@ -62,15 +87,15 @@ const testFunction =(req,res,next)=>{
   console.log('LIMITING');
   var newAdd = req.connection.remoteAddress;
   console.log('CLIENT ADDR: ', newAdd);
-  /*client.messages
+  client.messages
   .create({
      body: 'DDos Attack in progress!',
      from: '+14787968603',
      to: '+918861312434'
    })
-  .then(message => console.log(message));*/
+  .then(message => console.log(message));
   const ip= newAdd;
-  const website = 1;
+  const website = 'Test Software';
   const newHack = new Hacked({
     ip:ip,
     website:website,
@@ -82,7 +107,7 @@ const testFunction =(req,res,next)=>{
   })
 }
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 2 * 60 * 1000, // 2 minutes
   max: 2,
   onLimitReached: testFunction
 });
