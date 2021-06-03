@@ -14,6 +14,7 @@ const fundraiserRoutes = require('./api/routes/fundraiserRoutes');
 const userRoutes = require('./api/routes/userRoutes'); 
 const billingRoutes = require('./api/routes/billingRoutes');
 const hackedRoutes = require('./api/routes/hackedRoutes');
+
 //Twilio 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -21,8 +22,8 @@ const client = require('twilio')(accountSid, authToken);
 const http = require('http');
 const Hacked = require('./Models/Hacked');
 const ipfilter = require('express-ipfilter').IpFilter
-//CLOSE IMPORT OF THE ROUTES
 
+//CLOSE IMPORT OF THE ROUTES
 mongoose.Promise= global.Promise;
 
 mongoose
@@ -49,10 +50,12 @@ const ips = []
  
 // Create the server
 app.use((req,res,next)=>{
-  var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+ // var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
     // exit if it's a particular ip
+    var getIP = require('ipware')().get_ip;  
+    var ip = getIP(req);
     console.log("FOUNF IP",ip)
-    Hacked.findOne({ ip: ip }).then(test=>{
+    Hacked.findOne({ ip: ip.clientIp }).then(test=>{
         
         if(test!==null){
           console.log("FOUNF test",test)
@@ -84,8 +87,8 @@ app.use((req,res,next)=>{
 const rateLimit = require("express-rate-limit");
 const testFunction =(req,res,next)=>{
   //console.log(req);
-  console.log('LIMITING');
-  var newAdd = req.connection.remoteAddress;
+  console.log('LIMITING',req.ip);
+  var newAdd = req.ip;
   console.log('CLIENT ADDR: ', newAdd);
   client.messages
   .create({
