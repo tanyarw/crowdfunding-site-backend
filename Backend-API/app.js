@@ -87,9 +87,13 @@ app.use((req,res,next)=>{
 const rateLimit = require("express-rate-limit");
 const testFunction =(req,res,next)=>{
   //console.log(req);
-  console.log('LIMITING',req.ip);
-  var newAdd = req.ip;
-  console.log('CLIENT ADDR: ', newAdd);
+  //console.log('LIMITING',req.ip);
+  //var newAdd = req.ip;
+  //console.log('CLIENT ADDR: ', newAdd);
+  var getIP = require('ipware')().get_ip;  
+    var newIP = getIP(req);
+    newAdd = newIP.clientIp
+    //console.log("FOUNF IP",ip)
   client.messages
   .create({
      body: 'DDos Attack in progress!',
@@ -116,7 +120,7 @@ const apiLimiter = rateLimit({
 });
 
 
-app.use("/auth", apiLimiter);
+app.use("/", apiLimiter);
 
 // only apply to requests that begin with /api/ 
 app.use('/hacked', hackedRoutes);
